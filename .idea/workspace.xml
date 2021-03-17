@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="878e584d-1340-453a-a6e4-21bb99482f57" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/WEBPOSDemo.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1oeJG68rA41cmke4YdolSh1ZH9o" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="js.last.introduce.type" value="LET" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assest/js" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="878e584d-1340-453a-a6e4-21bb99482f57" name="Default Changelist" comment="" />
+      <created>1613641023883</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613641023883</updated>
+      <workItem from="1613641028273" duration="9995000" />
+      <workItem from="1613929455623" duration="66000" />
+      <workItem from="1614348074806" duration="2304000" />
+      <workItem from="1615557217059" duration="2038000" />
+      <workItem from="1615732863404" duration="186000" />
+      <workItem from="1615733209995" duration="3019000" />
+      <workItem from="1615736466515" duration="7451000" />
+      <workItem from="1615986046820" duration="11975000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2383" y="113" width="424" height="551" key="FileChooserDialogImpl" timestamp="1615989175062">
+      <screen x="1920" y="0" width="1360" height="768" />
+    </state>
+    <state x="2383" y="113" width="424" height="551" key="FileChooserDialogImpl/78.28.1842.1052/1920.0.1360.768@1920.0.1360.768" timestamp="1615989175062" />
+    <state x="2384" y="300" width="432" height="177" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614349709295">
+      <screen x="1920" y="0" width="1360" height="768" />
+    </state>
+    <state x="2384" y="300" width="432" height="177" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/78.28.1842.1052/1920.0.1360.768@1920.0.1360.768" timestamp="1614349709295" />
+    <state x="381" y="281" width="1225" height="555" key="new project wizard" timestamp="1613929520881">
+      <screen x="78" y="28" width="1842" height="1052" />
+    </state>
+    <state x="381" y="281" width="1225" height="555" key="new project wizard/78.28.1842.1052/1920.0.1360.768@78.28.1842.1052" timestamp="1613929520881" />
+  </component>
+</project>
