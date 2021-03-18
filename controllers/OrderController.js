@@ -124,14 +124,76 @@ $('#btnAddToCart').click(function () {
         calculateTotal();
         calculateSubTotal();
     });
+    calculateTotal();
 });
 
 function calculateTotal() {
+    let tot = 0;
+    let count = 0;
+
+    $('#tblCart>tr').each(function () {
+        tot += Number.parseInt($($('#tblCart>tr').get(count).children[4]).text());
+        count++;
+        console.log(count);
+    });
+    $('#lblTotal').text(tot + ".00");
+    $('#lblSubTotal').text(tot + ".00");
+    $('#txtDiscount').val(0);
+    $('#txtPayment').val(tot);
+    $('#txtBalance').val("0.00");
 
 }
 
 function calculateSubTotal() {
+    let subTot = 0;
+    let discount = 0;
+    if ($('#txtDiscount').val() === "") {
+        discount = 0;
+    } else {
+        discount = Number.parseInt($('#txtDiscount').val());
+    }
+    subTot = Number.parseInt($('#lblTotal').text()) - discount;
 
+    if (subTot < 0) {
+        $('#lblSubTotal').text($('#lblTotal').text());
+        $('#txtPayment').val(Number.parseInt($('#lblTotal').text()));
+        $('#txtPayment').attr('min', Number.parseInt($('#lblTotal').text()));
+    } else {
+        $('#lblSubTotal').text(subTot + ".00");
+        $('#txtPayment').val(subTot);
+        $('#txtPayment').attr('min', subTot);
+        calculateBalance();
+    }
+}
+
+$('#txtPayment').on('change', function () {
+    calculateBalance();
+});
+
+$('#txtPayment').on('keyup', function () {
+    validatePayment();
+    calculateBalance();
+});
+
+$('#txtDiscount').on('change', function () {
+    calculateSubTotal();
+});
+
+$('#txtDiscount').on('keyup', function () {
+    calculateSubTotal();
+});
+
+function validatePayment() {
+    // $('#txtBalance').val("0.00");
+}
+
+function calculateBalance() {
+    if ($('#txtPayment').val() === "" || Number.parseInt($('#txtPayment').val()) < Number.parseInt($('#lblSubTotal').text())) {
+        //error
+        $('#txtBalance').val("0.00");
+    } else {
+        $('#txtBalance').val($('#txtPayment').val() - $('#lblSubTotal').text() + ".00");
+    }
 }
 
 function saveOrder(orderId, orderDate, cusId, itemCode) {
