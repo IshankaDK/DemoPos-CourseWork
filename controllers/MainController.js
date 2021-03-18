@@ -41,6 +41,8 @@ $('#btnOrder').click(function () {
     $customerform.hide();
     $itemform.hide();
     $orderform.show();
-    // $customerformbutton.hide();
-    // $itemformbutton.hide();
+    clearFields();
+    generateOrderId();
+    loadCustomerId();
+    loadItemCode();
 });

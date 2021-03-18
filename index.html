@@ -195,7 +195,7 @@
                     <div class="row p-2 mt-3">
                         <div class="form-group col-5 ">
                             <lable>Order ID:</lable>
-                            <input type="text" id="txtOrderId" class="form-control">
+                            <input type="text" id="txtOrderId" class="form-control" disabled>
                         </div>
                         <div class="form-group col-7 ">
                             <lable>Order Date:</lable>
@@ -274,7 +274,7 @@
                             <input type="number" min="0" id="txtOrderQTY" class="form-control">
                         </div>
                         <div class="form-group col-4 mt-4">
-                            <button type="submit" class="btn btn-outline-primary fw-bold">Add to Cart</button>
+                            <button type="submit" class="btn btn-outline-primary fw-bold" id="btnAddToCart">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -293,7 +293,7 @@
                                 <lable>Total:</lable>
                             </div>
                             <div class="col-12">
-                                <lable><span class="text-primary" style="font-size: 30px">
+                                <lable><span class="text-primary" style="font-size: 30px" id="lblTotal">
                                     0.00
                                 </span>
                                     Rs/=
@@ -305,7 +305,7 @@
                                 <lable>Sub Total:</lable>
                             </div>
                             <div class="col-12">
-                                <lable><span class="text-danger" style="font-size: 30px">
+                                <lable><span class="text-danger" style="font-size: 30px" id="lblSubTotal">
                                     0.00
                                 </span>
                                     Rs/=
@@ -342,7 +342,7 @@
                         </div>
                         <div class="form-group col-4">
                             <button type="submit" class="btn btn-outline-success mt-4 fw-bold"
-                                    style="text-align: center">Place Order
+                                    style="text-align: center" id="btnPlaceOrder">Place Order
                             </button>
                         </div>
                     </div>
@@ -350,7 +350,7 @@
             </div>
         </div>
     </div>
-    <table class="table table-hover border mt-3 p-3  ">
+    <table class="table table-hover border mt-3 p-3 ">
         <thead class="bg-danger text-white">
         <tr>
             <th scope="col">Item Code</th>
@@ -360,7 +360,7 @@
             <th scope="col">Total</th>
         </tr>
         </thead>
-        <tbody class="bg-secondary text-white">
+        <tbody class="bg-secondary text-white" id="tblOrder">
         </tbody>
     </table>
 </div>
@@ -373,6 +373,8 @@
 <script src="controllers/ItemController.js"></script>
 <script src="model/CustomerDTO.js"></script>
 <script src="model/ItemDTO.js"></script>
+<script src="model/OrderDTO.js"></script>
+<script src="controllers/OrderController.js"></script>
 
 </body>
 </html>
