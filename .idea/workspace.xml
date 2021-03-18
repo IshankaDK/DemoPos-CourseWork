@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="878e584d-1340-453a-a6e4-21bb99482f57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/OrderController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/OrderDTO.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/MainController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/MainController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/OrderController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +63,7 @@
       <workItem from="1615986046820" duration="11975000" />
       <workItem from="1616008282598" duration="222000" />
       <workItem from="1616008786287" duration="635000" />
-      <workItem from="1616074985395" duration="6580000" />
+      <workItem from="1616074985395" duration="13685000" />
     </task>
     <servers />
   </component>

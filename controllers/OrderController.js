@@ -19,9 +19,9 @@ function loadCustomerId() {
         $('#cmbCustomerId').append("<option>" + allCustomers[count].getCustomerID() + "</option>");
         count++;
     });
-    $('#cmbCustomerId').on('change',function () {
+    $('#cmbCustomerId').on('change', function () {
         for (var i in allCustomers) {
-            if ($('#cmbCustomerId :selected').val() === allCustomers[i].getCustomerID()){
+            if ($('#cmbCustomerId :selected').val() === allCustomers[i].getCustomerID()) {
                 $('#txtCustomerId').val(allCustomers[i].getCustomerID());
                 $('#txtCustomerName').val(allCustomers[i].getCustomerName());
                 $('#txtCustomerAddress').val(allCustomers[i].getCustomerAddress());
@@ -30,6 +30,7 @@ function loadCustomerId() {
         }
     });
 }
+
 // load Item to combo and change values when selecting
 function loadItemCode() {
     let allItems = itemTable;
@@ -43,9 +44,9 @@ function loadItemCode() {
         $('#cmbItemCode').append("<option>" + allItems[count].getCode() + "</option>");
         count++;
     });
-    $('#cmbItemCode').on('change',function () {
+    $('#cmbItemCode').on('change', function () {
         for (var i in allItems) {
-            if ($('#cmbItemCode :selected').val() === allItems[i].getCode()){
+            if ($('#cmbItemCode :selected').val() === allItems[i].getCode()) {
                 $('#txtItemCode').val(allItems[i].getCode());
                 $('#txtDescription').val(allItems[i].getDescription());
                 $('#txtQtyOnHand').val(allItems[i].getQTY());
@@ -70,6 +71,68 @@ $('#btnPlaceOrder').click(function () {
     }
 
 });
+
+// add to cart
+
+$('#btnAddToCart').click(function () {
+    let itemCode = $('#txtItemCode').val();
+    let description = $('#txtDescription').val();
+    let orderQty = $('#txtOrderQTY').val();
+    let unitPrice = $('#txtUnitPrice').val();
+    let total = $('#txtUnitPrice').val() * $('#txtOrderQTY').val();
+
+    let count = 0;
+
+    let flag = true;
+
+    $('#tblCart>tr').each(function () {
+        if ($($('#tblCart>tr').get(count).children[0]).text() === itemCode) {
+            flag = false;
+            orderQty = Number.parseInt($($('#tblCart>tr').get(count).children[3]).text()) + Number.parseInt(orderQty);
+            $($('#tblCart>tr').get(count).children[3]).text(orderQty);
+            total = Number.parseInt($($('#tblCart>tr').get(count).children[4]).text()) + Number.parseInt(total);
+            $($('#tblCart>tr').get(count).children[4]).text(total + ".00");
+        }
+        count++;
+    });
+    if (flag) {
+        $('#tblCart').append(`<tr><td>${itemCode}</td><td>${description}</td><td>${unitPrice}</td><td>${orderQty}</td><td>${total + ".00"}</td></tr>`);
+    }
+
+    let newQty;
+    newQty = Number.parseInt($('#txtQtyOnHand').val()) - Number.parseInt($('#txtOrderQTY').val());
+    $('#txtQtyOnHand').val(newQty);
+    let allItems = itemTable;
+    for (let i = 0; i < allItems.length; i++) {
+        if (allItems[i].getCode() === $('#txtItemCode').val()) {
+            allItems[i].setQTY(newQty);
+        }
+    }
+
+    $('#tblCart>tr').off('dblclick');
+    $('#tblCart>tr').on('dblclick', function () {
+        let newQty;
+        let allItems = itemTable;
+        for (let i = 0; i < allItems.length; i++) {
+            if (allItems[i].getCode() === $($(this).children().get(0)).text()) {
+                newQty = Number.parseInt($($(this).children().get(3)).text()) + allItems[i].getQTY();
+                allItems[i].setQTY(newQty);
+            }
+        }
+        if ($($(this).children().get(0)).text() === $('#txtItemCode').val()) $('#txtQtyOnHand').val(newQty);
+        $(this).remove();
+        calculateTotal();
+        calculateSubTotal();
+    });
+});
+
+function calculateTotal() {
+
+}
+
+function calculateSubTotal() {
+
+}
 
 function saveOrder(orderId, orderDate, cusId, itemCode) {
     let orderDTO = new OrderDTO(orderId, orderDate, cusId, itemCode);
