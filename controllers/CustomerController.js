@@ -123,24 +123,74 @@ function loadAllCustomersToTable() {
     });
 }
 
-$('#txtCustomerId0').on('keydown', function (event) {
+// Reg Ex
+let cusIdRegEx = /^(C00-)[0-9]{1,3}$/;
+let cusNameRegEx = /^[A-z| ]{5,20}$/;
+let cusAddressRegEx = /^[A-z| |0-9|,]{7,}$/;
+let cusSalaryRegEx = /^\d{1,7}(?:\.\d{0,2})?$/;
+
+$('#txtCustomerId0').on('keyup', function (event) {
     if (event.key === "Enter") {
         $('#txtCustomerName0').focus();
     }
+    let input = $('#txtCustomerId0').val();
+    if (cusIdRegEx.test(input)){
+        $('#txtCustomerId0').css('border','2px solid green');
+        $('#lblcusid').text("");
+    }else {
+        $('#txtCustomerId0').css('border','2px solid red');
+        $('#lblcusid').text("Required field. Pattern:-(C00-000)");
+        $('#lblcusid').css('color','red');
+        $('#lblcusid').css('font-size','8px');
+    }
+
 });
-$('#txtCustomerName0').on('keydown', function (event) {
+
+$('#txtCustomerName0').on('keyup', function (event) {
     if (event.key === "Enter") {
         $('#txtCustomerAddress0').focus();
     }
+    let input = $('#txtCustomerName0').val();
+    if (cusNameRegEx.test(input)){
+        $('#txtCustomerName0').css('border','2px solid green');
+        $('#lblcusname').text("");
+    }else {
+        $('#txtCustomerName0').css('border','2px solid red');
+        $('#lblcusname').text("Required field. 5 to 20 characters Allowed.");
+        $('#lblcusname').css('color','red');
+        $('#lblcusname').css('font-size','8px');
+    }
 });
-$('#txtCustomerAddress0').on('keydown', function (event) {
+
+$('#txtCustomerAddress0').on('keyup', function (event) {
     if (event.key === "Enter") {
         $('#txtCustomerSalary0').focus();
     }
+    let input = $('#txtCustomerAddress0').val();
+    if (cusAddressRegEx.test(input)){
+        $('#txtCustomerAddress0').css('border','2px solid green');
+        $('#lblcusaddress').text("");
+    }else {
+        $('#txtCustomerAddress0').css('border','2px solid red');
+        $('#lblcusaddress').text("Required field. Minimum 7");
+        $('#lblcusaddress').css('color','red');
+        $('#lblcusaddress').css('font-size','8px');
+    }
 });
-$('#txtCustomerSalary0').on('keydown', function (event) {
+
+$('#txtCustomerSalary0').on('keyup', function (event) {
     if (event.key === "Enter") {
         $('#btnCustomerAdd').click();
+    }
+    let input = $('#txtCustomerSalary0').val();
+    if (cusSalaryRegEx.test(input)){
+        $('#txtCustomerSalary0').css('border','2px solid green');
+        $('#lblcussalary').text("");
+    }else {
+        $('#txtCustomerSalary0').css('border','2px solid red');
+        $('#lblcussalary').text("Required field. Pattern:(100.00 or 100)");
+        $('#lblcussalary').css('color','red');
+        $('#lblcussalary').css('font-size','8px');
     }
 });
 
