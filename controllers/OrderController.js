@@ -1,9 +1,18 @@
 // generate new order id
 
 function generateOrderId() {
-    let lastOrderId = orderTable.length - 1;
-    let newOrderId = lastOrderId + 1;
-    $('#txtOrderId').val(newOrderId);
+    if (orderTable.length == 0) {
+        $('#txtOrderId').val("OR-001");
+    } else {
+        let lastOrderId = orderTable[orderTable.length - 1].getOrderId();
+        let newId = Number.parseInt(lastOrderId.substring(3, 6)) + 1;
+        if (newId < 10) {
+            newId = "OR-00" + newId;
+        } else if (newId < 100) {
+            newId = "OR-0" + newId;
+        }
+        $('#txtOrderId').val(newId);
+    }
 }
 
 // load customerId to combo and change values when selecting
@@ -72,15 +81,19 @@ $('#btnPlaceOrder').click(function () {
             $($(this).children().get(2)).text(),
         ));
     });
-
-    let orderDTO = new OrderDTO(orderId,orderDate,cusId,orderDetails);
+    let discount = 10;
+    let orderDTO = new OrderDTO(orderId, orderDate, cusId, orderDetails, discount);
     orderTable.push(orderDTO);
+    // console.log(orderTable[0].getOrderId());
+    // console.log(orderTable[0].getOrderDate());
+    // console.log(orderTable[0].getCusId());
+    // console.log(orderTable[0].getOrderDetail());
+    // console.log(orderTable[0].getDiscount());
 
     clearFields();
     loadCustomerId();
     loadItemCode()
-
-
+    generateOrderId();
 });
 
 // add to cart
@@ -145,7 +158,6 @@ function calculateTotal() {
     $('#tblCart>tr').each(function () {
         tot += Number.parseInt($($('#tblCart>tr').get(count).children[4]).text());
         count++;
-        console.log(count);
     });
     $('#lblTotal').text(tot + ".00");
     $('#lblSubTotal').text(tot + ".00");
