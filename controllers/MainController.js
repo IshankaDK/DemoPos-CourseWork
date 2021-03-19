@@ -25,8 +25,7 @@ $('#btnCustomer').click(function () {
     $customerform.show();
     $itemform.hide();
     $orderform.hide();
-    // $customerformbutton.show();
-    // $itemformbutton.hide();
+    disableButton();
 });
 $('#btnItem').click(function () {
     $dashboardform.hide();
