@@ -32,8 +32,7 @@ $('#btnItem').click(function () {
     $customerform.hide();
     $itemform.show();
     $orderform.hide();
-    // $customerformbutton.hide();
-    // $itemformbutton.show();
+    disableButton2();
 });
 $('#btnOrder').click(function () {
     $dashboardform.hide();

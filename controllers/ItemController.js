@@ -48,8 +48,7 @@ $('#btnItemDelete').click(function () {
     clearItem();
 });
 
-
-
+// clear fields
 $('#btnItemCancel').click(function () {
     clearItem();
 });
@@ -123,26 +122,83 @@ function deleteItem(code) {
     }
 }
 
-$('#txtItemCode0').on('keydown', function (event) {
-    if (event.key === "Enter") {
-        $('#txtDescription0').focus();
+// Reg Ex
+let codeRegEx = /^(I00-)[0-9]{1,3}$/;
+let descRegEx = /^[A-z| |0-9]{1,25}$/;
+let qtyRegEx = /^[0-9]{1,4}$/;
+let priceRegEx = /^\d{1,4}(?:\.\d{0,2})?$/;
+
+$('#txtItemCode0,#txtDescription0,#txtQty0,#txtUnitPrice0').on('keyup', function (event) {
+    let input1 = $('#txtItemCode0').val();
+    let input2 = $('#txtDescription0').val();
+    let input3 = $('#txtQty0').val();
+    let input4 = $('#txtUnitPrice0').val();
+
+    if (codeRegEx.test(input1)) {
+        $('#txtItemCode0').css('border', '2px solid green');
+        $('#lblitemcode').text("");
+        if (event.key === "Enter") {
+            $('#txtDescription0').focus();
+        }
+        if (descRegEx.test(input2)) {
+            $('#txtDescription0').css('border', '2px solid green');
+            $('#lbldescription').text("");
+            if (event.key === "Enter") {
+                $('#txtQty0').focus();
+            }
+            if (qtyRegEx.test(input3)) {
+                $('#txtQty0').css('border', '2px solid green');
+                $('#lblqty').text("");
+                if (event.key === "Enter") {
+                    $('#txtUnitPrice0').focus();
+                }
+                if (priceRegEx.test(input4)) {
+                    $('#txtUnitPrice0').css('border', '2px solid green');
+                    $('#lblprice').text("");
+                    enableButton2();
+                    if (event.key === "Enter") {
+                        $('#btnItemAdd').click();
+                        $('#txtItemCode0').focus();
+                    }
+                } else {
+                    $('#txtUnitPrice0').css('border', '2px solid red');
+                    $('#lblprice').text("Required field. Pattern:-(100.00 or 100)");
+                    $('#lblprice').css('color', 'red');
+                    $('#lblprice').css('font-size', '8px');
+                    disableButton2();
+                }
+            } else {
+                $('#txtQty0').css('border', '2px solid red');
+                $('#lblqty').text("Required field. Maximum 5");
+                $('#lblqty').css('color', 'red');
+                $('#lblqty').css('font-size', '8px');
+                disableButton2();
+            }
+        } else {
+            $('#txtDescription0').css('border', '2px solid red');
+            $('#lbldescription').text("Required field. characters and numbers Allowed.");
+            $('#lbldescription').css('color', 'red');
+            $('#lbldescription').css('font-size', '8px');
+            disableButton2();
+        }
+    } else {
+        $('#txtItemCode0').css('border', '2px solid red');
+        $('#lblitemcode').text("Required field. Pattern:-(I00-000)");
+        $('#lblitemcode').css('color', 'red');
+        $('#lblitemcode').css('font-size', '8px');
+        disableButton2();
     }
 });
-$('#txtDescription0').on('keydown', function (event) {
-    if (event.key === "Enter") {
-        $('#txtQty0').focus();
-    }
-});
-$('#txtQty0').on('keydown', function (event) {
-    if (event.key === "Enter") {
-        $('#txtUnitPrice0').focus();
-    }
-});
-$('#txtUnitPrice0').on('keydown', function (event) {
-    if (event.key === "Enter") {
-        $('#btnItemAdd').click();
-    }
-});
+
+function disableButton2() {
+    $('#btnItemAdd').attr('disabled', 'disabled');
+    $('#btnItemUpdate').attr('disabled', 'disabled');
+}
+
+function enableButton2() {
+    $('#btnItemAdd').removeAttr('disabled');
+    $('#btnItemUpdate').removeAttr('disabled');
+}
 
 $('#txtItemCode0,#txtDescription0,#txtQty0,#txtUnitPrice0').on('keydown',function (event){
     if (event.key=="Tab"){
@@ -155,4 +211,8 @@ function clearItem() {
     $('#txtDescription0').val("");
     $('#txtQty0').val("");
     $('#txtUnitPrice0').val("");
+    disableButton2();
+    $('#lblitemcode,#lbldescription,#lblqty,#lblprice').text("");
+    $('#lblitemcode,#lbldescription,#lblqty,#lblprice').css('color',"");
+    $('#txtItemCode0,#txtDescription0,#txtQty0,#txtUnitPrice0').css('border','');
 }

@@ -163,7 +163,7 @@ $('#txtCustomerId0,#txtCustomerName0,#txtCustomerAddress0,#txtCustomerSalary0').
                     }
                 } else {
                     $('#txtCustomerSalary0').css('border', '2px solid red');
-                    $('#lblcussalary').text("Required field. Pattern:(100.00 or 100)");
+                    $('#lblcussalary').text("Required field. Pattern:-(100.00 or 100)");
                     $('#lblcussalary').css('color', 'red');
                     $('#lblcussalary').css('font-size', '8px');
                     disableButton();
@@ -215,4 +215,8 @@ function clearCustomer() {
     $('#txtCustomerAddress0').val("");
     $('#txtCustomerSalary0').val("");
     disableButton();
+    $('#lblcusid,#lblcusname,#lblcusaddress,#lblcussalary').text("");
+    $('#lblcusid,#lblcusname,#lblcusaddress,#lblcussalary').css('color',"");
+    $('#txtCustomerId0,#txtCustomerName0,#txtCustomerAddress0,#txtCustomerSalary0').css('border','');
+
 }
