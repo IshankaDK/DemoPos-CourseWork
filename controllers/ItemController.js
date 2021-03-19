@@ -123,6 +123,33 @@ function deleteItem(code) {
     }
 }
 
+$('#txtItemCode0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#txtDescription0').focus();
+    }
+});
+$('#txtDescription0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#txtQty0').focus();
+    }
+});
+$('#txtQty0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#txtUnitPrice0').focus();
+    }
+});
+$('#txtUnitPrice0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#btnItemAdd').click();
+    }
+});
+
+$('#txtItemCode0,#txtDescription0,#txtQty0,#txtUnitPrice0').on('keydown',function (event){
+    if (event.key=="Tab"){
+        event.preventDefault();
+    }
+});
+
 function clearItem() {
     $('#txtItemCode0').val("");
     $('#txtDescription0').val("");

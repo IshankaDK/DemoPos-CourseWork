@@ -123,6 +123,33 @@ function loadAllCustomersToTable() {
     });
 }
 
+$('#txtCustomerId0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#txtCustomerName0').focus();
+    }
+});
+$('#txtCustomerName0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#txtCustomerAddress0').focus();
+    }
+});
+$('#txtCustomerAddress0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#txtCustomerSalary0').focus();
+    }
+});
+$('#txtCustomerSalary0').on('keydown', function (event) {
+    if (event.key === "Enter") {
+        $('#btnCustomerAdd').click();
+    }
+});
+
+$('#txtCustomerId0,#txtCustomerName0,#txtCustomerAddress0,#txtCustomerSalary0').on('keydown',function (event){
+    if (event.key=="Tab"){
+        event.preventDefault();
+    }
+});
+
 
 //Clear Text Fields
 function clearCustomer() {

@@ -58,17 +58,28 @@ function loadItemCode() {
 
 //Place order
 $('#btnPlaceOrder').click(function () {
-    let orderId = $('#txtOrderId').val();
     let orderDate = $('#txtDate').val();
     let cusId = $('#txtCustomerId').val();
-    let itemCode = $('#txtItemCode').val();
 
-    let res = saveOrder(orderId, orderDate, cusId, itemCode);
-    if (res) {
-        clearFields();
-        loadCustomerId();
-        loadItemCode()
-    }
+    let orderDetails = [];
+    let orderId = $('#txtOrderId').val();
+
+    $('#tblCart>tr').each(function () {
+        orderDetails.push(new OrderDetails(
+            orderId,
+            $($(this).children().get(0)).text(),
+            $($(this).children().get(3)).text(),
+            $($(this).children().get(2)).text(),
+        ));
+    });
+
+    let orderDTO = new OrderDTO(orderId,orderDate,cusId,orderDetails);
+    orderTable.push(orderDTO);
+
+    clearFields();
+    loadCustomerId();
+    loadItemCode()
+
 
 });
 
@@ -196,11 +207,6 @@ function calculateBalance() {
     }
 }
 
-function saveOrder(orderId, orderDate, cusId, itemCode) {
-    let orderDTO = new OrderDTO(orderId, orderDate, cusId, itemCode);
-    orderTable.push(orderDTO);
-    return true;
-}
 
 function clearFields() {
     generateOrderId();
