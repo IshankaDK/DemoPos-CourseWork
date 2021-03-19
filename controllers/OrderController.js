@@ -1,6 +1,7 @@
 // generate new order id
 
 function generateOrderId() {
+
     if (orderTable.length == 0) {
         $('#txtOrderId').val("OR-001");
     } else {
@@ -13,6 +14,16 @@ function generateOrderId() {
         }
         $('#txtOrderId').val(newId);
     }
+}
+
+function generateDate() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+    console.log(today);
+    $("#txtDate").val(today);
 }
 
 // load customerId to combo and change values when selecting
@@ -219,6 +230,76 @@ function calculateBalance() {
     }
 }
 
+$('#txtOrderId,#txtDate,#txtOrderQTY,#txtPayment,#txtDiscount').on('keydown', function (event) {
+    if (event.key == "Tab") {
+        event.preventDefault();
+    }
+});
+
+// Reg Ex
+let orderIdRegEx = /^(OR-)[0-9]{1,3}$/;
+let orderQtyRegEx = /^[0-9]{1,4}$/;
+let paymentRegEx = /^\d{1,7}(?:\.\d{0,2})?$/;
+let discountRegEx = /^\d{1,7}(?:\.\d{0,2})?$/;
+
+$('#txtOrderId,#txtDate,#cmbCustomerId,#cmbItemCode,#txtOrderQTY,#txtPayment,#txtDiscount').on('keyup', function (event) {
+    let input1 = $('#txtOrderId').val();
+    let input2 = $('#txtOrderQTY').val();
+    let input3 = $('#txtPayment').val();
+    let input4 = $('#txtDiscount').val();
+
+    if (orderIdRegEx.test(input1)) {
+        $('#txtOrderId').css('border', '2px solid green');
+        $('#lblorderid').text("");
+    }else {
+        $('#txtOrderId').css('border', '2px solid red');
+        $('#lblorderid').text("Required field. Pattern:-(OR-000)");
+        $('#lblorderid').css('color', 'red');
+        $('#lblorderid').css('font-size', '8px');
+    }
+    if ($('#cmbCustomerId :selected').val() === "--Select--") {
+        $('#lblselectid').text("Required field. Please select Customer");
+        $('#lblselectid').css('color', 'red');
+        $('#lblselectid').css('font-size', '8px');
+    }
+    if ($('#cmbItemCode :selected').val() === "--Select--") {
+        $('#lblselectid').text("Required field. Please select Item");
+        $('#lblselectid').css('color', 'red');
+        $('#lblselectid').css('font-size', '8px');
+    }
+    if (orderQtyRegEx.test(input2)) {
+        $('#txtOrderQTY').css('border', '2px solid green');
+        $('#lblorderqty').text("");
+        if (event.key === "Enter") {
+            $('#btnAddToCart').click();
+            $('#cmbItemCode').focus();
+        }
+    }else {
+        $('#txtOrderQTY').css('border', '2px solid red');
+        $('#lblorderqty').text("Required field. Maximum 5");
+        $('#lblorderqty').css('color', 'red');
+        $('#lblorderqty').css('font-size', '8px');
+    }
+    if (paymentRegEx.test(input3)) {
+        $('#txtPayment').css('border', '2px solid green');
+        $('#lblpayment').text("");
+    }else {
+        $('#txtPayment').css('border', '2px solid red');
+        $('#lblpayment').text("Required field. Maximum 5");
+        $('#lblpayment').css('color', 'red');
+        $('#lblpayment').css('font-size', '8px');
+    }
+    if (discountRegEx.test(input4)) {
+        $('#txtDiscount').css('border', '2px solid green');
+        $('#lbldisount').text("");
+    }else {
+        $('#txtDiscount').css('border', '2px solid red');
+        $('#lbldisount').text("Required field. Maximum 5");
+        $('#lbldisount').css('color', 'red');
+        $('#lbldisount').css('font-size', '8px');
+    }
+
+});
 
 function clearFields() {
     generateOrderId();

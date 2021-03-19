@@ -203,7 +203,8 @@
                     <div class="row p-2 mt-3">
                         <div class="form-group col-5 ">
                             <lable>Order ID:</lable>
-                            <input type="text" id="txtOrderId" class="form-control" disabled>
+                            <input type="text" id="txtOrderId" class="form-control" >
+                            <span class="control-error" id="lblorderid"></span>
                         </div>
                         <div class="form-group col-7 ">
                             <lable>Order Date:</lable>
@@ -215,6 +216,7 @@
                             <lable>Select Customer ID:</lable>
                             <select class="form-control" id="cmbCustomerId">
                                 <option selected="selected" disabled="disabled">-Select Customer-</option>
+                                <span class="control-error" id="lblselectid"></span>
                             </select>
                         </div>
                         <div class="form-group col-6">
@@ -253,6 +255,7 @@
                             <lable>Select Item Code:</lable>
                             <select class="form-control" id="cmbItemCode">
                                 <option selected="selected" disabled="disabled">-Select Item-</option>
+                                <span class="control-error" id="lblselectcode"></span>
                             </select>
                         </div>
                         <div class="form-group col-6 ">
@@ -280,6 +283,7 @@
                         <div class="form-group col-8">
                             <lable>Order Quantity</lable>
                             <input type="number" min="0" id="txtOrderQTY" class="form-control">
+                            <span class="control-error" id="lblorderqty"></span>
                         </div>
                         <div class="form-group col-4 mt-4">
                             <button type="submit" class="btn btn-outline-primary fw-bold" id="btnAddToCart">Add to Cart</button>
@@ -324,6 +328,7 @@
                             </div>
                             <div class="col-12">
                                 <input type="number" min="0" class="form-control" id="txtPayment">
+                                <span class="control-error" id="lblpayment"></span>
                             </div>
                         </div>
                         <div class="form-group col-6">
@@ -332,6 +337,7 @@
                             </div>
                             <div class="col-12">
                                 <input type="number" min="0" class="form-control" id="txtDiscount">
+                                <span class="control-error" id="lbldisount"></span>
                             </div>
                         </div>
                     </div>
@@ -341,7 +347,7 @@
                                 <lable>Balance:</lable>
                             </div>
                             <div class="col-12">
-                                <input type="number" min="0" class="form-control" id="txtBalance">
+                                <input type="number" min="0" class="form-control" id="txtBalance" disabled>
                             </div>
                         </div>
                         <div class="form-group col-4">

@@ -43,4 +43,5 @@ $('#btnOrder').click(function () {
     generateOrderId();
     loadCustomerId();
     loadItemCode();
+    generateDate();
 });
