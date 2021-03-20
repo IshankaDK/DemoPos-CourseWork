@@ -39,7 +39,7 @@ $('#btnOrder').click(function () {
     $customerform.hide();
     $itemform.hide();
     $orderform.show();
-    clearFields();
+    // clearFields();
     generateOrderId();
     loadCustomerId();
     loadItemCode();

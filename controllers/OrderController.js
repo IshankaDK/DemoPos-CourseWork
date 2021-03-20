@@ -76,6 +76,7 @@ function loadItemCode() {
     });
 }
 
+
 //Place order
 $('#btnPlaceOrder').click(function () {
     let orderDate = $('#txtDate').val();
@@ -84,31 +85,37 @@ $('#btnPlaceOrder').click(function () {
     let orderDetails = [];
     let orderId = $('#txtOrderId').val();
 
-   if(!$('#tblCart').is(':empty')){
-       $('#tblCart>tr').each(function () {
-           orderDetails.push(new OrderDetails(
-               orderId,
-               $($(this).children().get(0)).text(),
-               $($(this).children().get(3)).text(),
-               $($(this).children().get(2)).text(),
-           ));
-       });
-       let discount = 10;
-       let orderDTO = new OrderDTO(orderId, orderDate, cusId, orderDetails, discount);
-       orderTable.push(orderDTO);
-       // console.log(orderTable[0].getOrderId());
-       // console.log(orderTable[0].getOrderDate());
-       // console.log(orderTable[0].getCusId());
-       // console.log(orderTable[0].getOrderDetail());
-       // console.log(orderTable[0].getDiscount());
+    if ($('#txtCustomerId').val() !== ""){
+        if (!$('#tblCart').is(':empty')) {
+            $('#tblCart>tr').each(function () {
+                orderDetails.push(new OrderDetails(
+                    orderId,
+                    $($(this).children().get(0)).text(),
+                    $($(this).children().get(3)).text(),
+                    $($(this).children().get(2)).text(),
+                ));
+            });
+            let discount = $('#txtDiscount').val();
+            let orderDTO = new OrderDTO(orderId, orderDate, cusId, orderDetails, discount);
+            orderTable.push(orderDTO);
+            // console.log(orderTable[0].getOrderId());
+            // console.log(orderTable[0].getOrderDate());
+            // console.log(orderTable[0].getCusId());
+            // console.log(orderTable[0].getOrderDetail());
+            // console.log(orderTable[0].getDiscount());
 
-       clearFields();
-       loadCustomerId();
-       loadItemCode()
-       generateOrderId();
-   }else {
-       disablePlaceOrder();
-   }
+            clearFields();
+            loadCustomerId();
+            loadItemCode()
+            generateOrderId();
+        } else {
+            alert("Cart Is Empty..!");
+            disablePlaceOrder();
+        }
+    }else {
+        alert("Please Select Customer..!");
+        $('#cmbCustomerId').focus();
+    }
 
 });
 
@@ -165,6 +172,7 @@ $('#btnAddToCart').click(function () {
         calculateSubTotal();
     });
     calculateTotal();
+    disablePlaceOrder();
 });
 
 function calculateTotal() {
@@ -205,12 +213,11 @@ function calculateSubTotal() {
     }
 }
 
-$('#txtPayment').on('change', function () {
-    calculateBalance();
-});
+// $('#txtPayment').on('change', function () {
+//     calculateBalance();
+// });
 
 $('#txtPayment').on('keyup', function () {
-    validatePayment();
     calculateBalance();
 });
 
@@ -222,17 +229,21 @@ $('#txtDiscount').on('keyup', function () {
     calculateSubTotal();
 });
 
-function validatePayment() {
-    // $('#txtBalance').val("0.00");
-}
 
 function calculateBalance() {
     if ($('#txtPayment').val() === "" || Number.parseInt($('#txtPayment').val()) < Number.parseInt($('#lblSubTotal').text())) {
-        //error
+        $('#txtPayment').css('border', '2px solid red');
+        $('#lblpayment').text("Please Enter "+$('#lblSubTotal').text()+" or above");
+        $('#lblpayment').css('color', 'red');
+        $('#lblbalance').css('color', 'red');
+        $('#lblpayment').css('font-size', '8px');
         disablePlaceOrder();
-        $('#txtBalance').val("0.00");
-    } else {
         $('#txtBalance').val($('#txtPayment').val() - $('#lblSubTotal').text() + ".00");
+    } else {
+        $('#txtPayment').css('border', '2px solid green');
+        $('#lblpayment').text("");
+        $('#txtBalance').val($('#txtPayment').val() - $('#lblSubTotal').text() + ".00");
+        enablePlaceOrder();
     }
 }
 
@@ -244,50 +255,26 @@ $('#txtOrderId,#txtDate,#txtOrderQTY,#txtPayment,#txtDiscount').on('keydown', fu
 
 // Reg Ex
 let orderIdRegEx = /^(OR-)[0-9]{1,3}$/;
-let orderQtyRegEx = /^[0-9]{1,4}$/;
-let paymentRegEx = /^\d{1,7}(?:\.\d{0,2})?$/;
 let discountRegEx = /^\d{1,7}(?:\.\d{0,2})?$/;
 
-$('#txtOrderId,#txtDate,#cmbCustomerId,#cmbItemCode,#txtOrderQTY,#txtPayment,#txtDiscount').on('keyup', function (event) {
+$('#txtOrderId,#txtDiscount').on('keyup', function (event) {
     let input1 = $('#txtOrderId').val();
-    let input2 = $('#txtOrderQTY').val();
-    let input3 = $('#txtPayment').val();
-    let input4 = $('#txtDiscount').val();
+    let input3 = $('#txtDiscount').val();
 
     if (orderIdRegEx.test(input1)) {
         $('#txtOrderId').css('border', '2px solid green');
         $('#lblorderid').text("");
-        // if (orderQtyRegEx.test(input2)) {
-        //     $('#txtOrderQTY').css('border', '2px solid green');
-        //     $('#lblorderqty').text("");
-            if (paymentRegEx.test(input3)) {
-                $('#txtPayment').css('border', '2px solid green');
-                $('#lblpayment').text("");
-                if (discountRegEx.test(input4)) {
-                    $('#txtDiscount').css('border', '2px solid green');
-                    $('#lbldisount').text("");
-                    enablePlaceOrder();
-                } else {
-                    $('#txtDiscount').css('border', '2px solid red');
-                    $('#lbldisount').text("Required field. Maximum 5");
-                    $('#lbldisount').css('color', 'red');
-                    $('#lbldisount').css('font-size', '8px');
-                    disablePlaceOrder();
-                }
-            } else {
-                $('#txtPayment').css('border', '2px solid red');
-                $('#lblpayment').text("Required field. Maximum 5");
-                $('#lblpayment').css('color', 'red');
-                $('#lblpayment').css('font-size', '8px');
-                disablePlaceOrder();
-            }
-        // } else {
-        //     $('#txtOrderQTY').css('border', '2px solid red');
-        //     $('#lblorderqty').text("Required field. Maximum 5");
-        //     $('#lblorderqty').css('color', 'red');
-        //     $('#lblorderqty').css('font-size', '8px');
-        //     disablePlaceOrder();
-        // }
+        if (discountRegEx.test(input3)) {
+            $('#txtDiscount').css('border', '2px solid green');
+            $('#lbldisount').text("");
+            enablePlaceOrder();
+        } else {
+            $('#txtDiscount').css('border', '2px solid red');
+            $('#lbldisount').text("Required field. Maximum 5");
+            $('#lbldisount').css('color', 'red');
+            $('#lbldisount').css('font-size', '8px');
+            disablePlaceOrder();
+        }
     } else {
         $('#txtOrderId').css('border', '2px solid red');
         $('#lblorderid').text("Required field. Pattern:-(OR-000)");
@@ -296,13 +283,14 @@ $('#txtOrderId,#txtDate,#cmbCustomerId,#cmbItemCode,#txtOrderQTY,#txtPayment,#tx
         disablePlaceOrder();
     }
 });
-$('#txtOrderQTY').on('keyup',function (event) {
+
+$('#txtOrderQTY').on('keyup', function (event) {
     if (Number.parseInt($('#txtOrderQTY').val()) <= Number.parseInt($('#txtQtyOnHand').val()) &
-        Number.parseInt($('#txtOrderQTY').val())  > 0 &
+        Number.parseInt($('#txtOrderQTY').val()) > 0 &
         $('#txtOrderQTY').val() !== "") {
         enableAddToCart();
-            $('#txtOrderQTY').css('border', '2px solid green');
-            $('#lblorderqty').text("");
+        $('#txtOrderQTY').css('border', '2px solid green');
+        $('#lblorderqty').text("");
         if (event.key === "Enter") {
             $('#btnAddToCart').click();
             $('#cmbItemCode').focus();
@@ -336,11 +324,13 @@ function clearFields() {
     $('#lblSubTotal').val(0.00);
     $('#cmbCustomerId').children().remove();
     $('#cmbItemCode').children().remove();
+    $('#tblCart').empty();
 }
 
 function disablePlaceOrder() {
     $('#btnPlaceOrder').attr('disabled', 'disabled');
 }
+
 function disableAddToCart() {
     $('#btnAddToCart').attr('disabled', 'disabled');
 }
@@ -348,6 +338,7 @@ function disableAddToCart() {
 function enablePlaceOrder() {
     $('#btnPlaceOrder').removeAttr('disabled');
 }
+
 function enableAddToCart() {
     $('#btnAddToCart').removeAttr('disabled');
 }

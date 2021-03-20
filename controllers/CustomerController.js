@@ -59,6 +59,20 @@ function saveCustomer(id, name, address, salary) {
     return true;
 }
 
+// $("#txtCustomerId0").on('keyup', function (eObj) {
+//     if (eObj.key == "Enter") {
+//         let customer = searchCustomer($(this).val());
+//         if (customer != null) {
+//             $("#txtCustomerId0").val(customer.getCustomerID());
+//             $("#txtCustomerName0").val(customer.getCustomerName());
+//             $("#txtCustomerAddress0").val(customer.getCustomerAddress());
+//             $("#txtCustomerSalary0ry").val(customer.getCustomerSalary());
+//         } else {
+//             clearCustomer();
+//         }
+//     }
+// });
+
 function searchCustomer(id) {
     for (var i in customerTable) {
         if (customerTable[i].getCustomerID() == id) return customerTable[i];
