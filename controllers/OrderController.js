@@ -213,10 +213,6 @@ function calculateSubTotal() {
     }
 }
 
-// $('#txtPayment').on('change', function () {
-//     calculateBalance();
-// });
-
 $('#txtPayment').on('keyup', function () {
     calculateBalance();
 });
@@ -304,9 +300,47 @@ $('#txtOrderQTY').on('keyup', function (event) {
     }
 })
 
+//search Order
+$('#txtOrderId').on('keydown',function (event) {
+    if (event.key === "Enter"){
+        let order = searchOrder($(this).val());
+        if (order != null){
+            $('#txtOrderId').val(order.getOrderId());
+            $('#txtDate').val(order.getOrderDate());
+            $('#txtCustomerId').val(order.getCusId());
+            $('#txtDiscount').val(order.getDiscount());
+            let searchCustomer1 = searchCustomer(order.getCusId());
+            $('#txtCustomerName').val(searchCustomer1.getCustomerName());
+            $('#txtCustomerAddress').val(searchCustomer1.getCustomerAddress());
+            $('#txtCustomerSalary').val(searchCustomer1.getCustomerSalary());
+
+            let orderDetail = order.getOrderDetail();
+            for (var j in orderDetail){
+                let itemCode1 = orderDetail[j].getItemCode();
+                let quantity1 = orderDetail[j].getQuantity();
+                let unitPrice1 = orderDetail[j].getUnitPrice();
+                let searchItem1 = searchItem(itemCode1);
+                let description1 = searchItem1.getDescription();
+                let total1 = quantity1 * unitPrice1;
+                var row = `<tr><td>${itemCode1}</td><td>${description1}</td><td>${unitPrice1}</td><td>${quantity1}</td><td>${total1 + ".00"}</td></tr>`;
+                $('#tblCart').append(row);
+            }
+
+        }
+    }
+});
+function searchOrder(orId) {
+    for (var i in orderTable){
+        if (orId === orderTable[i].getOrderId()){
+            return orderTable[i];
+        }
+    }
+return null;
+}
 
 function clearFields() {
     generateOrderId();
+    generateDate();
     $('#txtDate').val("");
     $('#txtCustomerId').val("");
     $('#txtCustomerName').val("");
@@ -320,8 +354,8 @@ function clearFields() {
     $('#txtPayment').val("");
     $('#txtDiscount').val("");
     $('#txtBalance').val("");
-    $('#lblTotal').val(0.00);
-    $('#lblSubTotal').val(0.00);
+    $('#lblTotal').text("0.00");
+    $('#lblSubTotal').text("0.00");
     $('#cmbCustomerId').children().remove();
     $('#cmbItemCode').children().remove();
     $('#tblCart').empty();

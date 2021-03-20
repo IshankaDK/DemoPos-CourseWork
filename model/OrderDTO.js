@@ -4,6 +4,7 @@ function OrderDTO(orderId, orderDate, cusId, odrDetail,discount) {
     var __cusId = cusId;
     let __orderDetail = odrDetail;
     let __discount = discount;
+
     this.getOrderId = function () {
         return __orderId;
     }
