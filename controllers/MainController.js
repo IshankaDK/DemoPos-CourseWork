@@ -44,4 +44,6 @@ $('#btnOrder').click(function () {
     loadCustomerId();
     loadItemCode();
     generateDate();
+    disablePlaceOrder();
+    disableAddToCart();
 });

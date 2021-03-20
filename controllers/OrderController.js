@@ -84,27 +84,32 @@ $('#btnPlaceOrder').click(function () {
     let orderDetails = [];
     let orderId = $('#txtOrderId').val();
 
-    $('#tblCart>tr').each(function () {
-        orderDetails.push(new OrderDetails(
-            orderId,
-            $($(this).children().get(0)).text(),
-            $($(this).children().get(3)).text(),
-            $($(this).children().get(2)).text(),
-        ));
-    });
-    let discount = 10;
-    let orderDTO = new OrderDTO(orderId, orderDate, cusId, orderDetails, discount);
-    orderTable.push(orderDTO);
-    // console.log(orderTable[0].getOrderId());
-    // console.log(orderTable[0].getOrderDate());
-    // console.log(orderTable[0].getCusId());
-    // console.log(orderTable[0].getOrderDetail());
-    // console.log(orderTable[0].getDiscount());
+   if(!$('#tblCart').is(':empty')){
+       $('#tblCart>tr').each(function () {
+           orderDetails.push(new OrderDetails(
+               orderId,
+               $($(this).children().get(0)).text(),
+               $($(this).children().get(3)).text(),
+               $($(this).children().get(2)).text(),
+           ));
+       });
+       let discount = 10;
+       let orderDTO = new OrderDTO(orderId, orderDate, cusId, orderDetails, discount);
+       orderTable.push(orderDTO);
+       // console.log(orderTable[0].getOrderId());
+       // console.log(orderTable[0].getOrderDate());
+       // console.log(orderTable[0].getCusId());
+       // console.log(orderTable[0].getOrderDetail());
+       // console.log(orderTable[0].getDiscount());
 
-    clearFields();
-    loadCustomerId();
-    loadItemCode()
-    generateOrderId();
+       clearFields();
+       loadCustomerId();
+       loadItemCode()
+       generateOrderId();
+   }else {
+       disablePlaceOrder();
+   }
+
 });
 
 // add to cart
@@ -224,6 +229,7 @@ function validatePayment() {
 function calculateBalance() {
     if ($('#txtPayment').val() === "" || Number.parseInt($('#txtPayment').val()) < Number.parseInt($('#lblSubTotal').text())) {
         //error
+        disablePlaceOrder();
         $('#txtBalance').val("0.00");
     } else {
         $('#txtBalance').val($('#txtPayment').val() - $('#lblSubTotal').text() + ".00");
@@ -251,55 +257,65 @@ $('#txtOrderId,#txtDate,#cmbCustomerId,#cmbItemCode,#txtOrderQTY,#txtPayment,#tx
     if (orderIdRegEx.test(input1)) {
         $('#txtOrderId').css('border', '2px solid green');
         $('#lblorderid').text("");
-    }else {
+        // if (orderQtyRegEx.test(input2)) {
+        //     $('#txtOrderQTY').css('border', '2px solid green');
+        //     $('#lblorderqty').text("");
+            if (paymentRegEx.test(input3)) {
+                $('#txtPayment').css('border', '2px solid green');
+                $('#lblpayment').text("");
+                if (discountRegEx.test(input4)) {
+                    $('#txtDiscount').css('border', '2px solid green');
+                    $('#lbldisount').text("");
+                    enablePlaceOrder();
+                } else {
+                    $('#txtDiscount').css('border', '2px solid red');
+                    $('#lbldisount').text("Required field. Maximum 5");
+                    $('#lbldisount').css('color', 'red');
+                    $('#lbldisount').css('font-size', '8px');
+                    disablePlaceOrder();
+                }
+            } else {
+                $('#txtPayment').css('border', '2px solid red');
+                $('#lblpayment').text("Required field. Maximum 5");
+                $('#lblpayment').css('color', 'red');
+                $('#lblpayment').css('font-size', '8px');
+                disablePlaceOrder();
+            }
+        // } else {
+        //     $('#txtOrderQTY').css('border', '2px solid red');
+        //     $('#lblorderqty').text("Required field. Maximum 5");
+        //     $('#lblorderqty').css('color', 'red');
+        //     $('#lblorderqty').css('font-size', '8px');
+        //     disablePlaceOrder();
+        // }
+    } else {
         $('#txtOrderId').css('border', '2px solid red');
         $('#lblorderid').text("Required field. Pattern:-(OR-000)");
         $('#lblorderid').css('color', 'red');
         $('#lblorderid').css('font-size', '8px');
+        disablePlaceOrder();
     }
-    if ($('#cmbCustomerId :selected').val() === "--Select--") {
-        $('#lblselectid').text("Required field. Please select Customer");
-        $('#lblselectid').css('color', 'red');
-        $('#lblselectid').css('font-size', '8px');
-    }
-    if ($('#cmbItemCode :selected').val() === "--Select--") {
-        $('#lblselectid').text("Required field. Please select Item");
-        $('#lblselectid').css('color', 'red');
-        $('#lblselectid').css('font-size', '8px');
-    }
-    if (orderQtyRegEx.test(input2)) {
-        $('#txtOrderQTY').css('border', '2px solid green');
-        $('#lblorderqty').text("");
+});
+$('#txtOrderQTY').on('keyup',function (event) {
+    if (Number.parseInt($('#txtOrderQTY').val()) <= Number.parseInt($('#txtQtyOnHand').val()) &
+        Number.parseInt($('#txtOrderQTY').val())  > 0 &
+        $('#txtOrderQTY').val() !== "") {
+        enableAddToCart();
+            $('#txtOrderQTY').css('border', '2px solid green');
+            $('#lblorderqty').text("");
         if (event.key === "Enter") {
             $('#btnAddToCart').click();
             $('#cmbItemCode').focus();
         }
-    }else {
+    } else {
         $('#txtOrderQTY').css('border', '2px solid red');
-        $('#lblorderqty').text("Required field. Maximum 5");
+        $('#lblorderqty').text("Please enter an amount lower than: " + $('#txtQtyOnHand').val());
         $('#lblorderqty').css('color', 'red');
         $('#lblorderqty').css('font-size', '8px');
+        disableAddToCart();
     }
-    if (paymentRegEx.test(input3)) {
-        $('#txtPayment').css('border', '2px solid green');
-        $('#lblpayment').text("");
-    }else {
-        $('#txtPayment').css('border', '2px solid red');
-        $('#lblpayment').text("Required field. Maximum 5");
-        $('#lblpayment').css('color', 'red');
-        $('#lblpayment').css('font-size', '8px');
-    }
-    if (discountRegEx.test(input4)) {
-        $('#txtDiscount').css('border', '2px solid green');
-        $('#lbldisount').text("");
-    }else {
-        $('#txtDiscount').css('border', '2px solid red');
-        $('#lbldisount').text("Required field. Maximum 5");
-        $('#lbldisount').css('color', 'red');
-        $('#lbldisount').css('font-size', '8px');
-    }
+})
 
-});
 
 function clearFields() {
     generateOrderId();
@@ -320,4 +336,18 @@ function clearFields() {
     $('#lblSubTotal').val(0.00);
     $('#cmbCustomerId').children().remove();
     $('#cmbItemCode').children().remove();
+}
+
+function disablePlaceOrder() {
+    $('#btnPlaceOrder').attr('disabled', 'disabled');
+}
+function disableAddToCart() {
+    $('#btnAddToCart').attr('disabled', 'disabled');
+}
+
+function enablePlaceOrder() {
+    $('#btnPlaceOrder').removeAttr('disabled');
+}
+function enableAddToCart() {
+    $('#btnAddToCart').removeAttr('disabled');
 }
