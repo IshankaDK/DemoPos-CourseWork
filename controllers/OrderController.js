@@ -169,6 +169,7 @@ $('#btnAddToCart').click(function () {
         calculateTotal();
         calculateSubTotal();
     });
+    $('#txtOrderQTY').val(0);
     calculateTotal();
     disablePlaceOrder();
 });
@@ -288,6 +289,7 @@ $('#txtOrderQTY').on('keyup', function (event) {
         if (event.key === "Enter") {
             $('#btnAddToCart').click();
             $('#cmbItemCode').focus();
+            disableAddToCart();
         }
     } else {
         $('#txtOrderQTY').css('border', '2px solid red');
